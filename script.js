@@ -66,17 +66,7 @@ groceryListEl.addEventListener("click", function (e) {
   if (e.target.classList.contains("edit__btn")) {
     const key = e.target.closest(".grocery__item").dataset.id;
     const i = groceryList.findIndex((item) => item.id === Number(key));
-    editGrocery(key);
-    document.querySelector(".modal__input").value = groceryList[i].text;
-    showModal();
-
-    document
-      .querySelector(".modal__form")
-      .addEventListener("submit", function () {
-        groceryList[i].text = document.querySelector(".modal__input").value;
-        renderGrocery(groceryList[i]);
-        window.location.reload();
-      });
+    editGrocery(i);
   }
 
   if (e.target.classList.contains("delete__btn")) {
@@ -85,17 +75,25 @@ groceryListEl.addEventListener("click", function (e) {
   }
 });
 
+const editGrocery = function (i) {
+  document.querySelector(".modal__input").value = groceryList[i].text;
+  showModal();
+
+  document
+    .querySelector(".modal__form")
+    .addEventListener("submit", function () {
+      groceryList[i].text = document.querySelector(".modal__input").value;
+      renderGrocery(groceryList[i]);
+      window.location.reload();
+    });
+};
+
 const updateGrocery = function () {
   const modalInput = document.querySelector(".modal__input");
 
   if (modalInput.value !== "") {
     closeModal();
   }
-};
-
-const editGrocery = function (key, value) {
-  const item = groceryList.find((item) => item.id === Number(key));
-  console.log(item);
 };
 
 const deleteGrocery = function (key) {
