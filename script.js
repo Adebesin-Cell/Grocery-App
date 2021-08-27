@@ -36,6 +36,7 @@ const addGrocery = function (value) {
 
 const renderGrocery = function (grocery) {
   localStorage.setItem("Grocery", JSON.stringify(groceryList));
+
   const groceryItemEl = document.querySelector(`[data-id = '${grocery.id}']`);
   if (grocery.deleted) {
     groceryItemEl.remove();
@@ -81,7 +82,13 @@ const editGrocery = function (i) {
 
   document
     .querySelector(".modal__form")
-    .addEventListener("submit", function () {
+    .addEventListener("submit", function (e) {
+      /* groceryList[i].text = document.querySelector(".modal__input").value;
+
+      // console.log(groceryList[i].id);
+      // console.log(localStorage.getItem(`Grocery`).valueOf(groceryList[i].id));
+      window.location.reload;
+      renderGrocery(groceryList[i]); */
       groceryList[i].text = document.querySelector(".modal__input").value;
       renderGrocery(groceryList[i]);
       window.location.reload();
@@ -142,4 +149,13 @@ clearAllBtn.addEventListener("click", function () {
   groceryList = [];
   groceryListEl.innerHTML = "";
   localStorage.removeItem("Grocery");
+});
+
+window.addEventListener("storage", function (e) {
+  if (e.key === "Grocery") {
+    // Do your thing
+
+    console.log(e.oldValue);
+    console.log(e.newValue);
+  }
 });
